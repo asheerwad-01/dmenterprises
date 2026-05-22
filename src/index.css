@@ -11,7 +11,7 @@
   --color-bg-alt: #F8FAFC;
   --color-gold: #F5A623;
   --color-gold-light: #FFB547;
-  
+
   --radius-xl: 16px;
   --radius-2xl: 24px;
   --radius-3xl: 32px;
@@ -25,29 +25,29 @@
 
 @layer components {
   .glass {
-    background: rgba(255,255,255,0.6);
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,0.35);
-    box-shadow: 0 8px 32px rgba(31,38,135,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.08);
   }
-  
+
   .glass-card {
-    background: rgba(255,255,255,0.75);
+    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(14px);
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
   }
-  
+
   .btn-primary {
     @apply bg-primary text-white font-semibold py-3 px-8 rounded-full shadow-[0_4px_14px_0_rgba(30,99,255,0.39)] transition-all duration-300 hover:shadow-[0_6px_20px_rgba(30,99,255,0.23)] hover:-translate-y-0.5 active:scale-95 flex items-center gap-2 cursor-pointer;
   }
-  
+
   .btn-secondary {
     @apply font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:-translate-y-0.5 active:scale-95 flex items-center gap-2 cursor-pointer;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.5);
   }
 }
