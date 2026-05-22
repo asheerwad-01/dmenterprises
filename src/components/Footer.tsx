@@ -13,7 +13,7 @@ export default function Footer() {
         <div className="flex flex-col gap-6">
           <Link to="/" className="flex items-center bg-white p-2 rounded-lg w-fit">
             <img
-              src="/DM Logo.png"
+              src="DM Logo.png"
               alt="DM Enterprises"
               className="h-8 lg:h-10 w-auto object-contain"
             />
