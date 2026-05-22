@@ -58,7 +58,7 @@ export default function Header() {
       )}>
         <Link to="/" className="flex items-center">
           <img
-            src="DM Logo.png"
+            src="/DM Logo.png"
             alt="DM Enterprises"
             className="h-10 lg:h-12 w-auto object-contain"
           />
