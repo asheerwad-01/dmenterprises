@@ -61,7 +61,7 @@ export default function Footer() {
                 <div className="bg-primary/10 p-2 rounded-lg text-primary h-fit group-hover:bg-primary group-hover:text-white transition-all"><Phone size={18} /></div>
                 <div className="flex flex-col">
                   <span className="text-xs text-gray-500 font-semibold uppercase">Call Us</span>
-                  <span className="text-sm group-hover:text-primary transition-colors">+91 98765 43210</span>
+                  <span className="text-sm group-hover:text-primary transition-colors">+91 96588 89357</span>
                 </div>
               </a>
             </li>
