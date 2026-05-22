@@ -57,7 +57,7 @@ export default function Footer() {
           <h4 className="text-lg font-bold mb-6 tracking-tight">Contact Us</h4>
           <ul className="flex flex-col gap-6">
             <li>
-              <a href="tel:+919876543210" className="flex gap-4 group cursor-pointer w-fit">
+              <a href="tel:+919658889357" className="flex gap-4 group cursor-pointer w-fit">
                 <div className="bg-primary/10 p-2 rounded-lg text-primary h-fit group-hover:bg-primary group-hover:text-white transition-all"><Phone size={18} /></div>
                 <div className="flex flex-col">
                   <span className="text-xs text-gray-500 font-semibold uppercase">Call Us</span>
