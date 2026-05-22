@@ -23,6 +23,6 @@ export default defineConfig(({ mode }) => {
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
-    base: process.env.VITE_BASE_PATH || "/dmenterprises",
+    base: process.env.VITE_BASE_PATH || "/",
   };
 });
