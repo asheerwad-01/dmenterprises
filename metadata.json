@@ -1,0 +1,8 @@
+{
+  "name": "DM Enterprises - Premium E-commerce",
+  "description": "A high-end, minimal luxury e-commerce platform for trophies, rubber stamps, and customized gifts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
