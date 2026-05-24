@@ -371,6 +371,126 @@ export const PRODUCTS: Product[] = [
     category: 'Mug Print',
     price: 299,
     image: 'https://www.wisholize.com/cdn/shop/products/White_Mug_325ml_bf246f52-976d-45b7-8491-13fe654169df.jpg?v=1463038984'
+  },
+  // New Rubber Stamp Products
+  {
+    id: '44',
+    title: 'Trodat Printy 4912 Self-Inking Stamp',
+    category: 'Self Inking Stamp',
+    price: 520,
+    image: 'https://www.thestampmaker.com/Images/products/TRODAT_PRINTY_4912.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas'
+  },
+  {
+    id: '45',
+    title: 'Colop Printer C20 Self-Inking Stamp',
+    category: 'Self Inking Stamp',
+    price: 480,
+    image: 'https://www.colop.com/media/catalog/product/cache/c42398b6d2e2aaadd2e3dde4cdef77a9/1/4/148496_detail1___colop-printer-20-black-green_1.webp'
+  },
+  {
+    id: '46',
+    title: 'Trodat Printy 4911 Self-Inking Stamp',
+    category: 'Self Inking Stamp',
+    price: 450,
+    image: 'https://www.thestampmaker.com/Images/products/TRODAT_PRINTY_4911.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas'
+  },
+  {
+    id: '47',
+    title: 'Colop Printer Q24 Square Self-Inking Stamp',
+    category: 'Self Inking Stamp',
+    price: 550,
+    image: 'https://www.colop.com/media/catalog/product/cache/c42398b6d2e2aaadd2e3dde4cdef77a9/1/4/148560_detail1___colop-printer-q-24-black_1.webp'
+  },
+  {
+    id: '48',
+    title: 'Trodat Printy 4924 Square Self-Inking Stamp',
+    category: 'Self Inking Stamp',
+    price: 750,
+    image: 'https://www.thestampmaker.com/Images/products/TRODAT_PRINTY_4924.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas'
+  },
+  {
+    id: '49',
+    title: 'Premium Flash Pre-Inked Stamp',
+    category: 'Pre Inked Stamp',
+    price: 650,
+    image: 'https://5.imimg.com/data5/SELLER/Default/2021/10/LO/CW/DN/35413928/trodat-flashy-red-pic-2--500x500.jpg'
+  },
+  {
+    id: '50',
+    title: 'Trodat Royal Flash Stamp',
+    category: 'Pre Inked Stamp',
+    price: 720,
+    image: 'https://5.imimg.com/data5/SELLER/Default/2020/12/VD/HE/XG/41267493/trodat-flash-stamp-500x500.jpg'
+  },
+  {
+    id: '51',
+    title: 'Sun Premium Flash Stamp SF-30',
+    category: 'Pre Inked Stamp',
+    price: 580,
+    image: 'https://5.imimg.com/data5/SELLER/Default/2021/10/XQ/JH/PL/35413928/trodat-flashy-black-pic-2--500x500.jpg'
+  },
+  {
+    id: '52',
+    title: 'Colop EOS 20 Pre-Inked Stamp',
+    category: 'Pre Inked Stamp',
+    price: 690,
+    image: 'https://www.colop.com/media/catalog/product/cache/c42398b6d2e2aaadd2e3dde4cdef77a9/1/4/148679_detail1___colop-eos-20-black_1.webp'
+  },
+  {
+    id: '53',
+    title: 'Colop Pocket Stamp Plus 30',
+    category: 'Pocket Stamp',
+    price: 390,
+    image: 'https://www.colop.com/media/catalog/product/cache/c42398b6d2e2aaadd2e3dde4cdef77a9/1/4/148591_detail1___colop-pocket-stamp-30-green-line_1.webp'
+  },
+  {
+    id: '54',
+    title: 'Trodat Mobile Printy 9411',
+    category: 'Pocket Stamp',
+    price: 420,
+    image: 'https://www.thestampmaker.com/Images/products/TRODAT_MOBILE_PRINTY_9411.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas'
+  },
+  {
+    id: '55',
+    title: 'Colop Pocket Stamp Q24',
+    category: 'Pocket Stamp',
+    price: 450,
+    image: 'https://www.colop.com/media/catalog/product/cache/c42398b6d2e2aaadd2e3dde4cdef77a9/1/4/148630_detail1___colop-pocket-stamp-q-24-indigo_1.webp'
+  },
+  {
+    id: '56',
+    title: 'Trodat Mobile Printy 9412',
+    category: 'Pocket Stamp',
+    price: 490,
+    image: 'https://www.thestampmaker.com/Images/products/TRODAT_MOBILE_PRINTY_9412.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas'
+  },
+  {
+    id: '57',
+    title: 'Trodat Printy 4810 Dater Stamp',
+    category: 'Date & Number Stamp',
+    price: 320,
+    image: 'https://images.meesho.com/images/products/380804139/96rlg_512.webp?width=512'
+  },
+  {
+    id: '58',
+    title: 'Heavy Duty 8-Digit Numberer',
+    category: 'Date & Number Stamp',
+    price: 580,
+    image: 'https://m.media-amazon.com/images/I/619ZCQYZHRL.jpg'
+  },
+  {
+    id: '59',
+    title: 'Colop S120 Mini Dater Stamp',
+    category: 'Date & Number Stamp',
+    price: 290,
+    image: 'https://www.colop.com/media/catalog/product/cache/c42398b6d2e2aaadd2e3dde4cdef77a9/1/4/148784_detail1___colop-mini-dater-s-120-black_1.webp'
+  },
+  {
+    id: '60',
+    title: 'Trodat Professional 5460 Heavy Duty Dater',
+    category: 'Date & Number Stamp',
+    price: 1850,
+    image: 'https://www.thestampmaker.com/Images/products/TRODAT_PROFESSIONAL_5460.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas'
   }
 ];
 

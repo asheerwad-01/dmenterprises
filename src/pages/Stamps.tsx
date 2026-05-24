@@ -2,13 +2,14 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCTS } from '@/constants';
-import { CheckCircle2, Package, History, Stamp, ArrowRight, ChevronDown, Filter } from 'lucide-react';
+import { CheckCircle2, Package, History, Stamp, ArrowRight, ChevronDown, Filter, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function Stamps() {
   const location = useLocation();
   const [selectedType, setSelectedType] = React.useState('All');
   const [sortBy, setSortBy] = React.useState('Popular');
+  const [searchQuery, setSearchQuery] = React.useState('');
 
   React.useEffect(() => {
     if (location.state && (location.state as any).selectedCategory) {
@@ -19,21 +20,50 @@ export default function Stamps() {
   const stampCategories = [
     { title: 'Self Inking Stamps', subtitle: 'Fast & Convenient', image: 'https://www.thestampmaker.com/Images/products/TRODAT_PRINTY_4910.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas' },
     { title: 'Pre Inked Stamps', subtitle: 'Ready to Use', image: 'https://5.imimg.com/data5/SELLER/Default/2021/10/LO/CW/DN/35413928/trodat-flashy-red-pic-2--500x500.jpg' },
-    { title: 'Wooden Handle Stamps', subtitle: 'Classic & Reliable', image: 'https://images.jdmagicbox.com/quickquotes/images_main/ergonomic-design-wooden-handle-rubber-stamp-2227254820-02lvhi1i.jpg' },
     { title: 'Pocket Stamps', subtitle: 'Compact & Portable', image: 'https://www.colop.com/media/catalog/product/cache/c42398b6d2e2aaadd2e3dde4cdef77a9/1/4/148591_detail1___colop-pocket-stamp-30-green-line_1.webp' },
     { title: 'Date & Number Stamps', subtitle: 'For Office Use', image: 'https://images.meesho.com/images/products/380804139/96rlg_512.webp?width=512' },
-    { title: 'Specialty Stamps', subtitle: 'Custom Applications', image: 'https://m.media-amazon.com/images/I/619ZCQYZHRL.jpg' },
   ];
 
   const stamps = PRODUCTS.filter(p => {
-    if (!p.category.includes('Stamp')) return false;
-    if (selectedType === 'All' || selectedType === 'Rubber Stamps') return true;
-    return p.title.toLowerCase().includes(selectedType.toLowerCase().split(' ')[0]) ||
-      p.category.toLowerCase().includes(selectedType.toLowerCase().split(' ')[0]);
+    const isStamp = p.category.toLowerCase().includes('stamp');
+    if (!isStamp) return false;
+
+    // Filter by category selection
+    let matchesCategory = true;
+    if (selectedType !== 'All' && selectedType !== 'Rubber Stamps') {
+      const typeLower = selectedType.toLowerCase();
+      const prodCatLower = p.category.toLowerCase();
+      const prodTitleLower = p.title.toLowerCase();
+
+      if (typeLower.includes('self')) {
+        matchesCategory = prodCatLower.includes('self') || prodTitleLower.includes('self') || prodCatLower.includes('printer');
+      } else if (typeLower.includes('pre')) {
+        matchesCategory = prodCatLower.includes('pre') || prodTitleLower.includes('pre') || prodCatLower.includes('flash');
+      } else if (typeLower.includes('pocket')) {
+        matchesCategory = prodCatLower.includes('pocket') || prodTitleLower.includes('pocket') || prodCatLower.includes('mobile');
+      } else if (typeLower.includes('date') || typeLower.includes('number')) {
+        matchesCategory = prodCatLower.includes('date') || prodTitleLower.includes('date') || prodCatLower.includes('number') || prodTitleLower.includes('number') || prodCatLower.includes('dater') || prodTitleLower.includes('dater') || prodTitleLower.includes('numberer');
+      } else {
+        // Fallback split logic
+        const key = typeLower.split(' ')[0];
+        matchesCategory = prodTitleLower.includes(key) || prodCatLower.includes(key);
+      }
+    }
+
+    // Filter by search query
+    let matchesSearch = true;
+    if (searchQuery.trim() !== '') {
+      const query = searchQuery.toLowerCase();
+      matchesSearch = p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
+    }
+
+    return matchesCategory && matchesSearch;
   }).sort((a, b) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
     if (sortBy === 'Rating: High to Low') return (b.rating || 0) - (a.rating || 0);
+    if (sortBy === 'Name: A to Z') return a.title.localeCompare(b.title);
+    if (sortBy === 'Name: Z to A') return b.title.localeCompare(a.title);
     return 0;
   });
 
@@ -86,7 +116,7 @@ export default function Stamps() {
       <section className="px-6 lg:px-10 py-12 text-center">
         <div className="max-w-7xl mx-auto flex flex-col gap-12">
           <h2 className="text-3xl font-extrabold text-navy-dark tracking-tighter">Shop by <span className="text-primary italic">Stamp Type</span></h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stampCategories.map((cat, i) => (
               <div
                 key={i}
@@ -112,23 +142,54 @@ export default function Stamps() {
       {/* Filter Bar */}
       <section className="px-6 lg:px-10 relative md:sticky top-[100px] z-30 transition-all">
         <div className="max-w-7xl mx-auto">
-          <div className="glass rounded-full p-3 flex flex-wrap justify-between items-center px-8 gap-4">
-            <div className="flex flex-wrap items-center gap-4">
-              <button onClick={() => setSelectedType('All')} className="flex items-center gap-2 font-bold text-xs uppercase tracking-widest text-primary hover:underline cursor-pointer"><Filter size={14} /> Clear Filter</button>
+          <div className="glass rounded-[32px] md:rounded-full p-4 md:p-3 flex flex-col md:flex-row justify-between items-center px-8 gap-4">
+            <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
+              <button 
+                onClick={() => { setSelectedType('All'); setSearchQuery(''); }} 
+                className="flex items-center gap-2 font-bold text-xs uppercase tracking-widest text-primary hover:underline cursor-pointer"
+              >
+                <Filter size={14} /> Clear Filter
+              </button>
               <div className="hidden sm:block h-4 w-[1px] bg-white/20" />
               <span className="text-xs font-bold text-navy-dark uppercase tracking-widest">Type: {selectedType}</span>
+              
+              <div className="hidden sm:block h-4 w-[1px] bg-white/20" />
+              
+              {/* Search input with premium glassmorphism styling */}
+              <div className="relative flex-grow sm:flex-grow-0 min-w-[200px]">
+                <input
+                  type="text"
+                  placeholder="Search stamps..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-white/10 text-navy-dark border border-white/20 rounded-full px-5 py-1.5 pl-9 text-xs font-bold uppercase tracking-wider outline-none placeholder:text-gray-400 focus:bg-white/20 focus:border-primary/50 transition-all font-sans"
+                />
+                <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                {searchQuery && (
+                  <button 
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-navy-dark text-xs font-bold"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="flex items-center gap-4">
+
+            <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0 border-white/10">
               <div className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-widest">
                 Sort by:
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-transparent text-navy-dark border-none outline-none font-bold uppercase tracking-widest cursor-pointer"
+                  className="bg-transparent text-navy-dark border-none outline-none font-bold uppercase tracking-widest cursor-pointer font-sans"
                 >
-                  <option>Popular</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
+                  <option className="bg-white text-navy-dark">Popular</option>
+                  <option className="bg-white text-navy-dark">Price: Low to High</option>
+                  <option className="bg-white text-navy-dark">Price: High to Low</option>
+                  <option className="bg-white text-navy-dark">Rating: High to Low</option>
+                  <option className="bg-white text-navy-dark">Name: A to Z</option>
+                  <option className="bg-white text-navy-dark">Name: Z to A</option>
                 </select>
               </div>
             </div>
