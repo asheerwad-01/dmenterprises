@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCTS, CATEGORIES } from '@/constants';
-import { Heart, Gift, Camera, ShoppingBag, ArrowRight, Filter } from 'lucide-react';
+import { Heart, Gift, Camera, ShoppingBag, ArrowRight, Filter, Search } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
@@ -9,6 +9,7 @@ export default function Gifts() {
   const location = useLocation();
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [sortBy, setSortBy] = React.useState('Popular');
+  const [searchQuery, setSearchQuery] = React.useState('');
 
   React.useEffect(() => {
     if (location.state && (location.state as any).selectedCategory) {
@@ -20,24 +21,37 @@ export default function Gifts() {
   const giftProducts = PRODUCTS.filter(p => {
     const isGift = !p.category.includes('Trophy') && !p.category.includes('Stamp');
     if (!isGift) return false;
-    if (selectedCategory === 'All') return true;
     
-    const catLower = selectedCategory.toLowerCase();
-    const prodCatLower = p.category.toLowerCase();
-    const prodTitleLower = p.title.toLowerCase();
+    // Category filter
+    let matchesCategory = true;
+    if (selectedCategory !== 'All') {
+      const catLower = selectedCategory.toLowerCase();
+      const prodCatLower = p.category.toLowerCase();
+      const prodTitleLower = p.title.toLowerCase();
 
-    if (catLower === 'customized gifts') {
-      return prodCatLower.includes('gift');
-    }
-    if (catLower === 'keyrings') {
-      return prodCatLower.includes('keyring');
+      if (catLower === 'customized gifts') {
+        matchesCategory = prodCatLower.includes('gift');
+      } else if (catLower === 'keyrings') {
+        matchesCategory = prodCatLower.includes('keyring');
+      } else {
+        matchesCategory = prodCatLower.includes(catLower) || prodTitleLower.includes(catLower);
+      }
     }
 
-    return prodCatLower.includes(catLower) || prodTitleLower.includes(catLower);
+    // Search query filter
+    let matchesSearch = true;
+    if (searchQuery.trim() !== '') {
+      const query = searchQuery.toLowerCase();
+      matchesSearch = p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query);
+    }
+
+    return matchesCategory && matchesSearch;
   }).sort((a, b) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
     if (sortBy === 'Rating: High to Low') return (b.rating || 0) - (a.rating || 0);
+    if (sortBy === 'Name: A to Z') return a.title.localeCompare(b.title);
+    if (sortBy === 'Name: Z to A') return b.title.localeCompare(a.title);
     return 0;
   });
 
@@ -119,23 +133,54 @@ export default function Gifts() {
       {/* Product List */}
       <section className="px-6 lg:px-10 py-16">
         <div className="max-w-7xl mx-auto flex flex-col gap-10">
-            <div className="glass rounded-full p-3 flex flex-wrap justify-between items-center px-8 gap-4 relative md:sticky top-[100px] z-30 transition-all">
-                <div className="flex flex-wrap items-center gap-4">
-                    <button onClick={() => setSelectedCategory('All')} className="flex items-center gap-2 font-bold text-xs uppercase tracking-widest text-primary hover:underline cursor-pointer"><Filter size={14} /> Clear Filter</button>
+            <div className="glass rounded-[32px] md:rounded-full p-4 md:p-3 flex flex-col md:flex-row justify-between items-center px-8 gap-4 relative md:sticky top-[100px] z-30 transition-all">
+                <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
+                    <button 
+                      onClick={() => { setSelectedCategory('All'); setSearchQuery(''); }} 
+                      className="flex items-center gap-2 font-bold text-xs uppercase tracking-widest text-primary hover:underline cursor-pointer"
+                    >
+                      <Filter size={14} /> Clear Filter
+                    </button>
                     <div className="hidden sm:block h-4 w-[1px] bg-white/20" />
                     <span className="text-xs font-bold text-navy-dark uppercase tracking-widest">Category: {selectedCategory}</span>
+                    
+                    <div className="hidden sm:block h-4 w-[1px] bg-white/20" />
+                    
+                    {/* Search input with premium glassmorphism styling */}
+                    <div className="relative flex-grow sm:flex-grow-0 min-w-[200px]">
+                      <input
+                        type="text"
+                        placeholder="Search gifts..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-white/10 text-navy-dark border border-white/20 rounded-full px-5 py-1.5 pl-9 text-xs font-bold uppercase tracking-wider outline-none placeholder:text-gray-400 focus:bg-white/20 focus:border-primary/50 transition-all font-sans"
+                      />
+                      <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                      {searchQuery && (
+                        <button 
+                          onClick={() => setSearchQuery('')}
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-navy-dark text-xs font-bold"
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
                 </div>
-                <div className="flex items-center gap-4">
+
+                <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-4 md:pt-0 border-white/10">
                     <div className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-widest">
                         Sort by: 
                         <select 
                           value={sortBy}
                           onChange={(e) => setSortBy(e.target.value)}
-                          className="bg-transparent text-navy-dark border-none outline-none font-bold uppercase tracking-widest cursor-pointer"
+                          className="bg-transparent text-navy-dark border-none outline-none font-bold uppercase tracking-widest cursor-pointer font-sans"
                         >
-                          <option>Popular</option>
-                          <option>Price: Low to High</option>
-                          <option>Price: High to Low</option>
+                          <option className="bg-white text-navy-dark">Popular</option>
+                          <option className="bg-white text-navy-dark">Price: Low to High</option>
+                          <option className="bg-white text-navy-dark">Price: High to Low</option>
+                          <option className="bg-white text-navy-dark">Rating: High to Low</option>
+                          <option className="bg-white text-navy-dark">Name: A to Z</option>
+                          <option className="bg-white text-navy-dark">Name: Z to A</option>
                         </select>
                     </div>
                 </div>
