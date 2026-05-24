@@ -373,3 +373,11 @@ export const PRODUCTS: Product[] = [
     image: 'https://www.wisholize.com/cdn/shop/products/White_Mug_325ml_bf246f52-976d-45b7-8491-13fe654169df.jpg?v=1463038984'
   }
 ];
+
+// Assign deterministic ratings to products if they don't have one
+PRODUCTS.forEach((product, idx) => {
+  if (product.rating === undefined) {
+    // Generate a rating between 4.0 and 5.0
+    product.rating = parseFloat((4.0 + ((idx * 7) % 11) * 0.1).toFixed(1));
+  }
+});

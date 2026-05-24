@@ -1,12 +1,20 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCTS } from '@/constants';
 import { CheckCircle2, Package, History, Stamp, ArrowRight, ChevronDown, Filter } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function Stamps() {
+  const location = useLocation();
   const [selectedType, setSelectedType] = React.useState('All');
   const [sortBy, setSortBy] = React.useState('Popular');
+
+  React.useEffect(() => {
+    if (location.state && (location.state as any).selectedCategory) {
+      setSelectedType((location.state as any).selectedCategory);
+    }
+  }, [location.state]);
 
   const stampCategories = [
     { title: 'Self Inking Stamps', subtitle: 'Fast & Convenient', image: 'https://www.thestampmaker.com/Images/products/TRODAT_PRINTY_4910.jpg.ashx?width=600&height=600&quality=90&format=webp&scale=canvas' },
@@ -19,12 +27,13 @@ export default function Stamps() {
 
   const stamps = PRODUCTS.filter(p => {
     if (!p.category.includes('Stamp')) return false;
-    if (selectedType === 'All') return true;
+    if (selectedType === 'All' || selectedType === 'Rubber Stamps') return true;
     return p.title.toLowerCase().includes(selectedType.toLowerCase().split(' ')[0]) ||
       p.category.toLowerCase().includes(selectedType.toLowerCase().split(' ')[0]);
   }).sort((a, b) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
+    if (sortBy === 'Rating: High to Low') return (b.rating || 0) - (a.rating || 0);
     return 0;
   });
 

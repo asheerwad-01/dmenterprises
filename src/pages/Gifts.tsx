@@ -2,22 +2,42 @@ import React from 'react';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCTS, CATEGORIES } from '@/constants';
 import { Heart, Gift, Camera, ShoppingBag, ArrowRight, Filter } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 export default function Gifts() {
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [sortBy, setSortBy] = React.useState('Popular');
+
+  React.useEffect(() => {
+    if (location.state && (location.state as any).selectedCategory) {
+      setSelectedCategory((location.state as any).selectedCategory);
+    }
+  }, [location.state]);
   
   const giftCategories = CATEGORIES.filter(c => ['Customized Gifts', 'Keyrings', 'T-Shirt Print', 'Mug Print'].includes(c.title));
   const giftProducts = PRODUCTS.filter(p => {
     const isGift = !p.category.includes('Trophy') && !p.category.includes('Stamp');
     if (!isGift) return false;
     if (selectedCategory === 'All') return true;
-    return p.category.includes(selectedCategory) || p.title.includes(selectedCategory);
+    
+    const catLower = selectedCategory.toLowerCase();
+    const prodCatLower = p.category.toLowerCase();
+    const prodTitleLower = p.title.toLowerCase();
+
+    if (catLower === 'customized gifts') {
+      return prodCatLower.includes('gift');
+    }
+    if (catLower === 'keyrings') {
+      return prodCatLower.includes('keyring');
+    }
+
+    return prodCatLower.includes(catLower) || prodTitleLower.includes(catLower);
   }).sort((a, b) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
+    if (sortBy === 'Rating: High to Low') return (b.rating || 0) - (a.rating || 0);
     return 0;
   });
 

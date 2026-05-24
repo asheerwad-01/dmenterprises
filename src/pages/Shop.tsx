@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCTS, CATEGORIES } from '@/constants';
 import { Filter, ChevronDown, SlidersHorizontal, ArrowRight } from 'lucide-react';
@@ -6,16 +7,48 @@ import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 export default function Shop() {
+  const location = useLocation();
   const [selectedCategory, setSelectedCategory] = React.useState('All');
   const [sortBy, setSortBy] = React.useState('Popular');
 
+  React.useEffect(() => {
+    if (location.state && (location.state as any).selectedCategory) {
+      setSelectedCategory((location.state as any).selectedCategory);
+    }
+  }, [location.state]);
+
   const filteredProducts = PRODUCTS.filter(p => {
     if (selectedCategory === 'All') return true;
-    return p.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
-      p.title.toLowerCase().includes(selectedCategory.toLowerCase());
+    
+    const catLower = selectedCategory.toLowerCase();
+    const prodCatLower = p.category.toLowerCase();
+    const prodTitleLower = p.title.toLowerCase();
+
+    if (catLower === 'trophies & awards') {
+      return prodCatLower.includes('trophy') || prodCatLower.includes('memento');
+    }
+    if (catLower === 'mementos') {
+      return prodCatLower.includes('memento');
+    }
+    if (catLower === 'customized gifts') {
+      return prodCatLower.includes('gift');
+    }
+    if (catLower === 'keyrings') {
+      return prodCatLower.includes('keyring');
+    }
+    if (catLower === 'rubber stamps') {
+      return prodCatLower.includes('stamp');
+    }
+
+    return prodCatLower.includes(catLower) || 
+      prodTitleLower.includes(catLower) ||
+      catLower.includes(prodCatLower);
   }).sort((a, b) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
+    if (sortBy === 'Rating: High to Low') return (b.rating || 0) - (a.rating || 0);
+    if (sortBy === 'Name: A to Z') return a.title.localeCompare(b.title);
+    if (sortBy === 'Name: Z to A') return b.title.localeCompare(a.title);
     return 0;
   });
 
@@ -85,19 +118,40 @@ export default function Shop() {
             <div className="flex flex-wrap items-center gap-4">
               <button onClick={() => setSelectedCategory('All')} className="flex items-center gap-2 font-bold text-xs uppercase tracking-widest text-primary hover:underline cursor-pointer"><Filter size={14} /> Clear Filter</button>
               <div className="hidden sm:block h-4 w-[1px] bg-white/20" />
-              <span className="text-xs font-bold text-navy-dark uppercase tracking-widest">Category: {selectedCategory}</span>
+              <span className="text-xs font-bold text-navy-dark uppercase tracking-widest">Selected: {selectedCategory}</span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
+              {/* Category Dropdown */}
+              <div className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-widest">
+                Category:
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="bg-transparent text-navy-dark border-none outline-none font-bold uppercase tracking-widest cursor-pointer font-sans"
+                >
+                  <option value="All" className="bg-white text-navy-dark">All Categories</option>
+                  {CATEGORIES.map(cat => (
+                    <option key={cat.id} value={cat.title} className="bg-white text-navy-dark">{cat.title}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="h-4 w-[1px] bg-white/20" />
+
+              {/* Sort Dropdown */}
               <div className="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-widest">
                 Sort by:
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-transparent text-navy-dark border-none outline-none font-bold uppercase tracking-widest cursor-pointer"
+                  className="bg-transparent text-navy-dark border-none outline-none font-bold uppercase tracking-widest cursor-pointer font-sans"
                 >
-                  <option>Popular</option>
-                  <option>Price: Low to High</option>
-                  <option>Price: High to Low</option>
+                  <option className="bg-white text-navy-dark">Popular</option>
+                  <option className="bg-white text-navy-dark">Price: Low to High</option>
+                  <option className="bg-white text-navy-dark">Price: High to Low</option>
+                  <option className="bg-white text-navy-dark">Rating: High to Low</option>
+                  <option className="bg-white text-navy-dark">Name: A to Z</option>
+                  <option className="bg-white text-navy-dark">Name: Z to A</option>
                 </select>
               </div>
             </div>

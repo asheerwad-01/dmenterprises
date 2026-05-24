@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import ProductCard from '@/components/ProductCard';
 import { PRODUCTS } from '@/constants';
 import { Award, Star, Compass, ShieldCheck, ArrowRight, ChevronDown, Filter } from 'lucide-react';
@@ -6,8 +7,15 @@ import { motion } from 'motion/react';
 import { cn } from '@/lib/utils';
 
 export default function Trophies() {
+  const location = useLocation();
   const [selectedType, setSelectedType] = React.useState('All');
   const [sortBy, setSortBy] = React.useState('Popular');
+
+  React.useEffect(() => {
+    if (location.state && (location.state as any).selectedCategory) {
+      setSelectedType((location.state as any).selectedCategory);
+    }
+  }, [location.state]);
   
   const trophyCategories = [
     { title: 'Trophies', subtitle: 'Classic & Modern', image: '/Trophies/12.jpeg' },
@@ -28,6 +36,7 @@ export default function Trophies() {
   }).sort((a, b) => {
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
+    if (sortBy === 'Rating: High to Low') return (b.rating || 0) - (a.rating || 0);
     return 0;
   });
 

@@ -23,7 +23,7 @@ export default function CategoryBar() {
                         key={cat.id} 
                         className="flex-shrink-0"
                     >
-                        <Link to={cat.path} className="glass-card group flex flex-col items-center gap-4 p-6 rounded-3xl w-48 transition-all hover:-translate-y-2 hover:shadow-xl">
+                        <Link to={cat.path} state={{ selectedCategory: cat.title }} className="glass-card group flex flex-col items-center gap-4 p-6 rounded-3xl w-48 transition-all hover:-translate-y-2 hover:shadow-xl">
                             <div className="w-28 h-28 rounded-full bg-white relative overflow-hidden flex items-center justify-center p-4">
                                 <img 
                                     src={cat.image} 

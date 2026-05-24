@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Search, User, Heart, ShoppingCart, Menu, X, Facebook, Instagram, Phone, Mail, Truck, Box, HelpCircle } from 'lucide-react';
+import { Search, User, Heart, ShoppingCart, Menu, X, Facebook, Instagram, Twitter, Phone, Mail, Truck, Box, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'motion/react';
 import { PRODUCTS } from '@/constants';
@@ -45,8 +45,15 @@ export default function Header() {
         </div>
         <div className="flex gap-6 items-center">
           <div className="flex items-center gap-3 ml-4 border-l border-white/30 pl-4">
-            <Facebook size={12} className="cursor-pointer hover:text-primary transition-colors" />
-            <Instagram size={12} className="cursor-pointer hover:text-primary transition-colors" />
+            <a href="https://www.facebook.com/dmenterprises" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <Facebook size={12} className="cursor-pointer hover:text-primary transition-colors" />
+            </a>
+            <a href="https://www.instagram.com/_dm_enterprises" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <Instagram size={12} className="cursor-pointer hover:text-primary transition-colors" />
+            </a>
+            <a href="https://twitter.com/dmenterprises" target="_blank" rel="noopener noreferrer" className="flex items-center">
+              <Twitter size={12} className="cursor-pointer hover:text-primary transition-colors" />
+            </a>
           </div>
         </div>
       </div>

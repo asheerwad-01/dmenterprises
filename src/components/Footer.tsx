@@ -22,9 +22,9 @@ export default function Footer() {
             DM Enterprises is your trusted partner for trophies, customized gifts, and rubber stamps with premium quality you can rely on.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="p-2 bg-white/5 hover:bg-primary transition-all rounded-full"><Facebook size={18} /></a>
-            <a href="#" className="p-2 bg-white/5 hover:bg-primary transition-all rounded-full"><Instagram size={18} /></a>
-            <a href="#" className="p-2 bg-white/5 hover:bg-primary transition-all rounded-full"><Twitter size={18} /></a>
+            <a href="https://www.facebook.com/dmenterprises" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-primary transition-all rounded-full"><Facebook size={18} /></a>
+            <a href="https://www.instagram.com/_dm_enterprises" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-primary transition-all rounded-full"><Instagram size={18} /></a>
+            <a href="https://twitter.com/dmenterprises" target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-primary transition-all rounded-full"><Twitter size={18} /></a>
           </div>
         </div>
 
@@ -36,7 +36,6 @@ export default function Footer() {
             <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
             <li><Link to="/shop" className="hover:text-primary transition-colors">Shop</Link></li>
             <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
-            <li><Link to="#" className="hover:text-primary transition-colors">Bulk Orders</Link></li>
           </ul>
         </div>
 
