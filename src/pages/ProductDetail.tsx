@@ -25,34 +25,34 @@ export default function ProductDetail() {
    };
 
    return (
-      <main className="pt-32 pb-20 bg-bg-light min-h-screen">
+      <main className="pt-24 sm:pt-32 pb-20 bg-bg-light min-h-screen">
          <div className="max-w-7xl mx-auto px-6 lg:px-10">
 
             {/* Navigation & Breadcrumbs */}
-            <div className="flex items-center gap-6 mb-10">
+            <div className="flex items-center gap-3 sm:gap-6 mb-8 sm:mb-10 min-w-0">
                <button
                   onClick={() => window.history.back()}
-                  className="p-3 glass rounded-full text-navy-dark hover:bg-primary hover:text-white transition-all cursor-pointer shadow-sm group"
+                  className="p-2 sm:p-3 glass rounded-full text-navy-dark hover:bg-primary hover:text-white transition-all cursor-pointer shadow-sm group shrink-0"
                >
-                  <ArrowLeft size={20} className="group-active:scale-90 transition-transform" />
+                  <ArrowLeft size={18} className="sm:size-5 group-active:scale-90 transition-transform" />
                </button>
-               <div className="flex items-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
-                  <Link to="/shop" className="hover:text-primary transition-colors">Shop</Link>
-                  <ChevronRight size={10} />
-                  <span className="text-navy-dark">{product.category}</span>
-                  <ChevronRight size={10} />
-                  <span className="text-primary italic truncate">{product.title}</span>
+               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest min-w-0">
+                  <Link to="/shop" className="hover:text-primary transition-colors shrink-0">Shop</Link>
+                  <ChevronRight size={10} className="shrink-0" />
+                  <span className="text-navy-dark shrink-0">{product.category}</span>
+                  <ChevronRight size={10} className="shrink-0" />
+                  <span className="text-primary italic truncate max-w-[120px] sm:max-w-none">{product.title}</span>
                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16">
                {/* Image Showcase */}
                <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex flex-col gap-6"
+                  className="flex flex-col gap-4 sm:gap-6"
                >
-                  <div className="glass h-[500px] rounded-[40px] flex items-center justify-center p-12 relative overflow-hidden group">
+                  <div className="glass h-[300px] sm:h-[400px] lg:h-[500px] rounded-[24px] sm:rounded-[40px] flex items-center justify-center p-6 sm:p-12 relative overflow-hidden group">
                      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-primary/5 -z-10" />
                      <img
                         src={product.image}
@@ -61,9 +61,9 @@ export default function ProductDetail() {
                      />
                   </div>
                   {/* Thumbnails Placeholder */}
-                  <div className="flex gap-4">
+                  <div className="flex gap-2 sm:gap-4">
                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="w-24 h-24 glass rounded-2xl p-4 flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-primary transition-all">
+                        <div key={i} className="w-16 h-16 sm:w-24 sm:h-24 glass rounded-xl sm:rounded-2xl p-2 sm:p-4 flex items-center justify-center cursor-pointer border-2 border-transparent hover:border-primary transition-all">
                            <img src={product.image} className="max-h-full max-w-full object-contain opacity-60" />
                         </div>
                      ))}
@@ -74,14 +74,14 @@ export default function ProductDetail() {
                <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  className="flex flex-col gap-8"
+                  className="flex flex-col gap-6 sm:gap-8"
                >
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-2 sm:gap-3">
                      <span className="text-xs font-bold text-primary uppercase tracking-[0.3em]">{product.category}</span>
-                     <h1 className="text-4xl lg:text-5xl font-extrabold text-navy-dark tracking-tighter leading-tight">
+                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-navy-dark tracking-tighter leading-tight">
                         {product.title}
                      </h1>
-                     <div className="flex items-center gap-4 mt-2">
+                     <div className="flex items-center gap-4 mt-1 sm:mt-2">
                         <div className="flex text-gold">
                            {[1, 2, 3, 4, 5].map((s) => <Star key={s} size={16} fill="currentColor" stroke="none" />)}
                         </div>
@@ -91,7 +91,7 @@ export default function ProductDetail() {
 
                   <div className="flex flex-col gap-1">
                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Our Price</span>
-                     <div className="flex items-baseline gap-2">
+                     <div className="flex flex-wrap items-baseline gap-2">
                         <span className="text-4xl font-extrabold text-navy-dark tracking-tighter">₹{product.price.toLocaleString()}</span>
                         <span className="text-gray-400 line-through text-lg font-medium">₹{(product.price * 1.2).toFixed(0)}</span>
                         <span className="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded-md uppercase">Save 20%</span>
@@ -99,7 +99,7 @@ export default function ProductDetail() {
                   </div>
 
                   <p className="text-gray-500 font-medium leading-relaxed">
-                     Expertly crafted with the highest quality materials, this ${product.category.toLowerCase()} is designed for those who value excellence and durability. Perfect for recognition, decoration, or a special customized gift.
+                     Expertly crafted with the highest quality materials, this {product.category.toLowerCase()} is designed for those who value excellence and durability. Perfect for recognition, decoration, or a special customized gift.
                   </p>
 
                   {/* Product Meta */}
@@ -133,7 +133,7 @@ export default function ProductDetail() {
                   </div>
 
                   {/* Security Stripes */}
-                  <div className="flex flex-wrap gap-6 mt-4">
+                  <div className="flex flex-wrap gap-x-4 gap-y-2 mt-4">
                      <div className="flex items-center gap-2 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
                         <ShieldCheck size={14} className="text-primary" /> 100% Secure Checkout
                      </div>
